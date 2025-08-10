@@ -1,0 +1,45 @@
+{
+  "name": "fops-prompter",
+  "displayName": "FOPs Prompter",
+  "description": "Shows interactive prompts from running FOPs (Python) code and sends your responses back.",
+  "publisher": "yourpublisher",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "extensionKind": ["workspace"],
+  "activationEvents": ["onCommand:fops.openPrompter", "onStartupFinished"],
+  "main": "./out/extension.js",
+  "license": "AGPL-3.0",
+  "contributes": {
+    "commands": [
+      { "command": "fops.openPrompter", "title": "FOPs: Open Prompter" }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "FOPs Prompter",
+      "properties": {
+        "fopsPrompter.port": {
+          "type": "number",
+          "default": 5533,
+          "description": "TCP port the extension listens on for prompt requests from your FOPs process."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourorg/fops-prompter.git"
+  },
+
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}

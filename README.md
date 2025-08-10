@@ -23,10 +23,12 @@ fop.py                     # sample script
 3. Debug fop.py using the python debugger
 
 ### VSCode extension
-1. Open `vscode-fops-prompter` in VS Code.
-2. `npm install`
-3. Press **F5** to start the Extension Development Host.
-4. Run the command **FOPs: Open Prompter** to open the UI.
+The extension is automatically built by dev-containers, but not installed.
+So, in the vscode-fopts-prompter, shoould appear after starting the dev-container the fops-prompter-x.y.z.vsix.
+
+Just install it: 
+1. Install it (Right click -> Install)
+2. Run the command **FOPs: Open Prompter** to open the UI (F1 -> FOPS: Open Prompter)
 5. Keep this host window open while running Python.
 
 ## How it works

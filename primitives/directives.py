@@ -1,10 +1,12 @@
 from fops_core.trace import trace
 from fops_core.retry import retry_decorator
 from fops_core.sinks import send_trace_data_local
+from integrations.vscode.retry_vscode import retry_decorator_with_vscode_fallback
 
 __all__ = ["SendTC", "VerifyTM"]
 
-@retry_decorator
+#@retry_decorator
+@retry_decorator_with_vscode_fallback
 @trace(send_trace_data_local, lines=True, calls=True, returns=True, exceptions=True, capture_values=True, maxlen=160)
 def SendTC(args):
     if args == 2:

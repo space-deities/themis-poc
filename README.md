@@ -1,4 +1,4 @@
-# fops_python
+# Satellite Flight Operational Procedures (FOPs) in Python
 Personal experiments for having a reasonable environment for writting, debugging and running satellite flight operational procedures using python. 
 
 # Quickstart

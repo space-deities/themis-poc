@@ -1,38 +1,81 @@
 # Satellite Flight Operational Procedures (FOPs) in Python
-Personal experiments for having a reasonable environment for writting, debugging and running satellite flight operational procedures using python. 
 
-This bundle contains:
-- The FOPs project (tracing/retry/sinks + primitives)
-- A VS Code extension that shows prompts and returns responses to Python over HTTP
-- A Python integration to ask the VS Code extension for input (retry decorator fallback)
+**Status:** Experimental  
+This repository contains personal experiments exploring a practical, non-intrusive way to **write, debug, and run Satellite Flight Operational Procedures (FOPs)** using **plain Python** plus a small set of domain primitives.
 
-## Layout
-```
-fops_core/                 # tracing, retry, sinks
-primitives/                # SendTC, VerifyTM (decorated)
-integrations/vscode/       # Python client + retry decorator that uses VS Code prompts
+The aim is to validate that Python (with a VS Code workflow) can support common FOP activities in both development and operational contexts.
+
+---
+
+## Objectives
+
+The experiments aim to **prove or discard** the viability of:
+
+1. **Step-by-step execution** — critical for development and testing (e.g., with a simulator).
+2. **Syntax highlighting** and **support for domain-specific directives**.
+3. **Domain-specific exception handling** — e.g., catch a telecommand send failure and **prompt the operator** to decide how to continue (**cancel**, **skip**, **abort**).
+4. **In-UI prompt handling** — respond to FOP prompts **without leaving the main UI**.
+5. **Resume on crash** — continue a procedure from the last known safe point.
+6. **Attach to a running procedure** — including ones started in the background or by another UI.
+7. **Web UI** — for monitoring and control.
+8. **Domain-specific displays** — e.g., command verification status, telemetry values.
+
+> Assumption: **VS Code** (or equivalent) is the primary interactive environment to develop and run FOPs.
+
+---
+
+## What’s Included
+
+- **FOPs core** (tracing / retry / sinks) + **domain specific directives**
+- A **VS Code extension** that raises prompts and returns operator responses to Python over HTTP
+- A **Python integration** that asks the VS Code extension for input (retry decorator with console fallback)
+
+---
+
+## Repository Layout
+
+```text
+fops_core/                 # Core: tracing, retry logic, sinks
+primitives/                # Domain primitives (e.g., SendTC, VerifyTM with decorators)
+integrations/vscode/       # Python client + retry decorator using VS Code prompts
 vscode-fops-prompter/      # VS Code extension (TypeScript)
-fop.py                     # sample script
+fop.py                     # Example FOP script
 ```
+
+---
 
 ## Quickstart
 
-### VSCode development environment
-1. Install the VSCode extension Dev-Containers
-2. Re-open the project using Dev-Containers (F1->Dev-Containers: Reopen ...)
-3. Debug fop.py using the python debugger
+### VS Code development environment
 
-### VSCode extension
-The extension is automatically built by dev-containers, but not installed.
-So, in the vscode-fopts-prompter, shoould appear after starting the dev-container the fops-prompter-x.y.z.vsix.
+1. Install the **Dev Containers** extension in VS Code.
+2. Reopen the project in a Dev Container:  
+   `F1` → **Dev-Containers: Reopen in Container**
+3. Use the Python debugger to run **`fop.py`**.
 
-Just install it: 
-1. Install it (Right click -> Install)
-2. Run the command **FOPs: Open Prompter** to open the UI (F1 -> FOPS: Open Prompter)
-5. Keep this host window open while running Python.
+> Tip: Dev Containers requires Docker (or a compatible backend) running on your machine.
 
-## How it works
-When defining a new directive, use the standard retry decorator (console prompt) from `fops_core.retry` **or** use the VS Code aware one:
+### VS Code extension
+
+- The extension is **built automatically** by the Dev Container, but **not installed**.
+- After the container starts, a file like **`fops-prompter-x.y.z.vsix`** should appear in **`vscode-fops-prompter/`**.
+
+**Install it:**
+
+1. In `vscode-fops-prompter/`, right-click the `.vsix` → **Install**.
+2. Open the prompter UI:  
+   `F1` → **FOPs: Open Prompter**
+3. **Keep this prompter window open** while running your Python FOPs.
+
+---
+
+## How It Works
+
+Use either:
+
+- the **console-based** retry decorator from `fops_core.retry`, or  
+- the **VS Code–aware** retry decorator that first tries the extension prompt, then falls back to console input.
+
 ```python
 from integrations.vscode.retry_vscode import retry_decorator_with_vscode_fallback
 
@@ -40,8 +83,31 @@ from integrations.vscode.retry_vscode import retry_decorator_with_vscode_fallbac
 def SendTC(args):
     ...
 ```
-When an exception happens, it will try to prompt via the VS Code extension first; if not available, it falls back to console input.
 
-## Configure port
-The VSCode extension listens on `127.0.0.1:5533` by default. You can change it in VS Code Settings → FOPs Prompter: Port and also adjust `EXT_PORT` in `integrations/vscode/prompt_client.py` accordingly.
+**Behavior on exception:**
 
+1. Attempt to prompt the operator via the **VS Code extension**.
+2. If unavailable, **fall back to console** input.
+
+---
+
+## Configuration
+
+### Extension port
+
+- **Default:** `127.0.0.1:5533`
+- **Change it in VS Code:** `Settings → FOPs Prompter: Port`
+- **Update Python client:** set `EXT_PORT` in `integrations/vscode/prompt_client.py`
+
+---
+
+## Notes & Scope
+
+- This is an **experiment** to assess feasibility and developer experience—**not** a production-ready system.
+- The focus is on **interactivity** (prompts, retries, operator choices) and **developer ergonomics** within VS Code.
+
+---
+
+## License
+
+[AGPL](LICENSE)

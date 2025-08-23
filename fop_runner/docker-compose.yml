@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  pydebug:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pydebug
+    environment:
+      # Change this to your target (examples):
+      # PROCEDURE: "tools/myfop.py"
+      # PROCEDURE: "mypkg.worker:main"
+      PROCEDURE: "fop.py"
+      DEBUGPY_HOST: "0.0.0.0"
+      DEBUGPY_PORT: "5678"
+      WAIT_FOR_CLIENT: "true"   # set to "false" to start immediately without waiting for IDE
+      PYTHONUNBUFFERED: "1"
+    working_dir: /work
+    volumes:
+      - ./:/work:rw   # map the folder with fops to /work. There could be a REST endpoint for getting the procedure... 
+    ports:
+      - "5678:5678"      # expose debugpy for attaching the IDE
+    tty: true

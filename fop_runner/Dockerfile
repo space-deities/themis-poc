@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Debug adapter
 RUN pip install --no-cache-dir debugpy requests
 
-# Non-root (optional but recommended)
+# Non-root
 RUN useradd -ms /bin/bash dev
 USER dev
 

@@ -1,24 +1,27 @@
 # Satellite Flight Operational Procedures (FOPs) in Python
 
 **Status:** Experimental  
-This repository contains personal experiments exploring a practical, non-intrusive way to **write, debug, and run Satellite Flight Operational Procedures (FOPs)** using **plain Python** plus a small set of domain primitives.
+This repository contains personal experiments exploring a practical, non-intrusive way to **write, debug, and run Satellite Flight Operational Procedures (FOPs)** using **plain Python**.
 
-The aim is to validate that Python (with a VS Code workflow) can support common FOP activities in both development and operational contexts.
+The aim is to validate that Python (integrated with a OSS IDE) can support common FOP activities in both development and operational contexts.
+The integration must not be intrusive, avoiding any manipulation of the python interpreter and facilitating the evolution of the framework to new releases of python.
 
 ---
 
 ## Objectives
 
-The experiments aim to **prove or discard** the viability of:
+The experiments aim to **prove or discard** the viability of following features using a combination of OSS tools and custom developments:
 
-1. **Step-by-step execution** — critical for development and testing (e.g., with a simulator).
-2. **Syntax highlighting** and **support for domain-specific directives**.
-3. **Domain-specific exception handling** — e.g., catch a telecommand send failure and **prompt the operator** to decide how to continue (**cancel**, **skip**, **abort**).
-4. **In-UI prompt handling** — respond to FOP prompts **without leaving the main UI**.
-5. **Resume on crash** — continue a procedure from the last known safe point.
-6. **Attach to a running procedure** — including ones started in the background or by another UI.
-7. **Web UI** — for monitoring and control.
-8. **Domain-specific displays** — e.g., command verification status, telemetry values.
+1. **Domain specific functions** (e.g. Send, VerifyTM, ...) - Key mechanism for interacting programatically with TM&TC core and the building blocks for proc automation.
+2. **Step-by-step execution** — critical for development and testing (e.g., with a simulator).
+3. **Syntax highlighting** and **support for domain-specific directives**.
+4. **Domain-specific exception handling** — e.g., catch a telecommand send failure and **prompt the operator** to decide how to continue (**cancel**, **skip**, **abort**).
+5. **In-UI prompt handling** — respond to FOP prompts **without leaving the main UI**.
+6. **Resume on crash** — continue a procedure from the last known safe point.
+7. **Attach to a running procedure** — including ones started in the background or by another UI.
+8. **Web UI** — for monitoring and control.
+9. **Domain-specific displays** — e.g., command verification status, telemetry values.
+10. **User Libraries** - extend domain specific functions with reusable pieces of code developed by the user
 
 > Assumption: **VS Code** (or equivalent) is the primary interactive environment to develop and run FOPs.
 

@@ -1,0 +1,18 @@
+services:
+  theia:
+    build: .
+    image: theia-python:1.64
+    container_name: theia-python
+    ports:
+      - "3000:3000"
+    environment:
+      - THEIA_DEFAULT_PLUGINS=local-dir:///home/theia/.theia-ide/deployedPlugins
+      - NODE_OPTIONS=--max-old-space-size=4096
+    volumes:
+      # mount your local code here:
+      - ./workspace:/home/project
+    # if you want to persist user settings (optional), uncomment next line,
+    # but note it will override baked-in plugins if you mount the whole dir:
+    # - theia_data:/home/theia/.theia-ide
+#volumes:
+#  theia_data:

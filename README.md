@@ -3,6 +3,8 @@
 **Status:** Experimental  
 This repository contains personal experiments exploring a practical, non-intrusive way to **write, debug, and run Satellite Flight Operational Procedures (FOPs)** using **plain Python**.
 
+Space deity code name: **Themis**
+
 The aim is to validate that Python (integrated with a OSS IDE) can support common FOP activities in both development and operational contexts.
 The integration must not be intrusive, avoiding any manipulation of the python interpreter and facilitating the evolution of the framework to new releases of python.
 

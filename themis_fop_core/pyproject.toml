@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "themis_fop_core"
+version = "0.1.0"
+description = "Satellite Flight Operational Procedures (FOPs) primitives, core, and integrations."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Space Deities", email = "contact@spacedeities.com" }]
+keywords = ["satellite", "automation", "ccsds", "pus", "cfdp", "operations", "fop"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU Affero General Public License v3",
+  "Typing :: Typed",
+]
+
+dependencies = [
+  "typer>=0.12",
+  "rich>=13.7",
+  "pydantic>=2.7",
+  "requests"
+]
+
+[project.optional-dependencies]
+# cfdp = ["fuchsia-cfdp-client>=0.1 ; python_version>='3.11'"]
+# cloud = ["boto3>=1.34", "botocore>=1.34"]
+# observability = ["opentelemetry-sdk>=1.25", "opentelemetry-exporter-otlp>=1.25"]
+
+[project.scripts]
+fops = "fops.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fops"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["fops"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+lint.select = ["E","F","I","B","UP","SIM"]
+format.quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true

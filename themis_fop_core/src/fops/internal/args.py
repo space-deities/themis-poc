@@ -34,6 +34,10 @@ class Action(Enum):
     RESUME = auto()
     HANDLE = auto()
 
+class PromptType(Enum):
+    OK = auto()
+    YES_NO = auto()
+
 # -----------------------------------------------------------------------------
 # Defaults + Modifiers
 # -----------------------------------------------------------------------------
@@ -56,7 +60,8 @@ DEFAULTS: dict[str, Any] = {
     "HandleError": True,
 
     "Notify": True,
-    "Confirm": False
+    "Confirm": False,
+    "Type": PromptType.OK
 }
 
 @dataclass(frozen=True)
@@ -80,6 +85,8 @@ class Modifiers:
 
     Notify: bool = DEFAULTS["Notify"]
     Confirm: bool = DEFAULTS["Confirm"]
+
+    Type: PromptType = DEFAULTS["Type"]
 
 # -----------------------------------------------------------------------------
 # Conditions & Boolean expressions

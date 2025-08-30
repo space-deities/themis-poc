@@ -16,10 +16,7 @@ The aim is to validate that we can wrap in a single python lib the required "run
 
 ## What’s Included
 
-- **Themis Core**: A python library implementing themis domain specific directives (Themis Lang), plus helpers for parsing arguments, track the execution of a directive and automatic catch/retry on exceptions (actual Themis Core). These two should be split in the future.
-- **Themis Runner**: A container-based solution for running  python scripts. The python is pre-configured with Themis Core, so Themis Lang is enabled for implementing FOPs in python.
-- **VS Code extension for Themis** A VS Code extension that creates a panel raising prompts and returning operator responses to the themis script over HTTP.
-- **VS Code python integration for Themis** A python extension to Themis Lang that asks the VS Code extension for input (retry decorator with console fallback)
+
 
 ---
 
@@ -65,9 +62,13 @@ code .
 * The debugger should stop on the break point
 * Run step by step to the end of the procedure
 
-> Note: In the previous examples, the exceptions are captured and prompt for options are presented in the console. In the next examples, this "prompt on failure" will be redirected to the VSCode extension, so the prompt could be responded via integrated VSCode panel.
+> Note: In the previous examples, the exceptions are captured and prompt for options are presented in the console. In the next examples, this "prompt on failure" will be redirected to the VSCode extension, so the prompt could be responded via integrated VSCode panel.∂
 
 ---
+## Themis Lang
+### Prompt
+This primitive only supports VSCode integration. The request for prompt is always redirected to the VSCode pluging.
+Only works for "OK" Type.
 
 ## Configuration
 

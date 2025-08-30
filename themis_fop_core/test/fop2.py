@@ -1,6 +1,9 @@
 from fops.internal.args import AND, Action, Operator
+from fops.lang.prompt import Prompt
 from fops.lang.send import Send
 from fops.lang.verify_tm import VerifyTM
+
+#Prompt("Starting procedure")
 
 res1 = VerifyTM(["TM1", "eq", 100], Retries=3)
 #print(res1)

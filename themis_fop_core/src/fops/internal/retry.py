@@ -3,11 +3,12 @@ import uuid
 
 from .trace import attempt_var, corr_id_var
 
-#__all__ = ["retry_decorator"]
 
 def retry_decorator(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
+
+
         corr = str(uuid.uuid4())  # one correlation ID across all attempts
         attempt = 1
         while True:

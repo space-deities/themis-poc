@@ -1,6 +1,5 @@
 import requests
 
-#__all__ = ["send_trace_data_local", "send_trace_data_http"]
 
 def send_trace_data_local(function_name, line_number, code_line, event, meta):
     cid = meta.get("corr_id")

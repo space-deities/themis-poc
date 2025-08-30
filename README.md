@@ -14,7 +14,7 @@ The integration must not be intrusive, avoiding any manipulation of the python i
 
 The experiments aim to **prove or discard** the viability of following features using a combination of OSS tools and custom developments:
 
-1. **Domain specific functions** (e.g. Send, VerifyTM, ...) - Key mechanism for interacting programatically with TM&TC core and the building blocks for proc automation.
+1. **Domain specific functions** (e.g. Send, VerifyTM, ...) - Key mechanism for interacting programmatically with TM&TC core and the building blocks for proc automation.
 2. **Step-by-step execution** — critical for development and testing (e.g., with a simulator).
 3. **Syntax highlighting** and **support for domain-specific directives**.
 4. **Domain-specific exception handling** — e.g., catch a telecommand send failure and **prompt the operator** to decide how to continue (**cancel**, **skip**, **abort**).
@@ -31,47 +31,60 @@ The experiments aim to **prove or discard** the viability of following features 
 
 ## What’s Included
 
-- **FOPs core** (tracing / retry / sinks) + **domain specific directives**
-- A **VS Code extension** that raises prompts and returns operator responses to Python over HTTP
-- A **Python integration** that asks the VS Code extension for input (retry decorator with console fallback)
+- **Themis Core**: A python library implementing themis domain specific directives (Themis Lang), plus helpers for parsing arguments, track the execution of a directive and automatic catch/retry on exceptions (actual Themis Core). These two should be split in the future.
+- **Themis Runner**: A container-based solution for running  python scripts. The python is pre-configured with Themis Core, so Themis Lang is enabled for implementing FOPs in python.
+- **VS Code extension for Themis** A VS Code extension that creates a panel raising prompts and returning operator responses to the themis script over HTTP.
+- **VS Code python integration for Themis** A python extension to Themis Lang that asks the VS Code extension for input (retry decorator with console fallback)
 
 ---
 
 ## Repository Layout
 
 ```text
-fops_core/                 # Core: tracing, retry logic, sinks
-primitives/                # Domain primitives (e.g., SendTC, VerifyTM with decorators)
-integrations/vscode/       # Python client + retry decorator using VS Code prompts
-vscode-fops-prompter/      # VS Code extension (TypeScript)
-fop.py                     # Example FOP script
+themis_fop_core/           # Themis Core: Implementation of Themis Lang (domain specific primitives) and support helpers (e.g. tracing, retry logic, sinks, etc.)
+fop_runner/                # Themis Runner: Implementation of a script running based on docker containers. Each script runs isolated in a different and unique identified container.
+vscode-fops-prompter/      # VS Code extension providing a panel for responding prompts
 ```
 
 ---
 
 ## Quickstart
 
-### VS Code development environment
+1. Build and try the Themis Core library first (e.g. without integration with VSCode).
+See [Themis Core REAME](themis_fop_core/README.md) for details
 
-1. Install the **Dev Containers** extension in VS Code.
-2. Reopen the project in a Dev Container:  
-   `F1` → **Dev-Containers: Reopen in Container**
-3. Use the Python debugger to run **`fop.py`**.
+2. Setup the development environment for VSCode. This will enable the possibility of building and installing the VSCode Themis Panel (for responding prompts)
+   1. Install the **Dev Containers** extension in VS Code.
+   2. Reopen the project in a Dev Container:  
+      `F1` → **Dev-Containers: Reopen in Container**
 
-> Tip: Dev Containers requires Docker (or a compatible backend) running on your machine.
+   > Tip: Dev Containers requires Docker (or a compatible backend) running on your machine.
 
-### VS Code extension
+   > Tip: Dev Containers configuration (.devcontainers in root) installs automatically Themis Core. But:
+      * Does not build it!!!! Remember to build it before.
+      * If you change it, you will need to re-build the dev container to re-install the new version.
 
-- The extension is **built automatically** by the Dev Container, but **not installed**.
-- After the container starts, a file like **`fops-prompter-x.y.z.vsix`** should appear in **`vscode-fops-prompter/`**.
 
-**Install it:**
+3. Try the VSCode panel for responding prompts
+   > Note: The extension is **built automatically** by the Dev Container, but **not installed**.
+   >  
+   > After the container starts, a file like **`fops-prompter-x.y.z.vsix`** should appear in **`vscode-fops-prompter/`**.
 
-1. In `vscode-fops-prompter/`, right-click the `.vsix` → **Install**.
-2. Open the prompter UI:  
-   `F1` → **FOPs: Open Prompter**
-3. **Keep this prompter window open** while running your Python FOPs.
+   1. Install the VSCode extension
+      1. In `vscode-fops-prompter/`, right-click the `.vsix` → **Install**.
+      2. Open the prompter UI:  
+      `F1` → **FOPs: Open Prompter**
+   2. **Keep this prompter window open**.
+   3. Open themis_fop_core/fop2.py
+   4. Run it
+   5. The execution should stop and prompt for response when sending the command "COMMAND_EX". Respond it using the VSCode panel.
 
+
+4. Test the Themis Runner
+TBW
+
+
+**** ALL BELOW HERE, TO BE RE-WRITTEN ****
 ---
 
 ## How It Works

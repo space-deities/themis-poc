@@ -1,1 +1,2 @@
 requests
+./themis_fop_core/dist/themis_fop_core-0.1.0-py3-none-any.whl
